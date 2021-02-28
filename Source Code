@@ -1,0 +1,65 @@
+/*
+Harsh Shah 
+ */
+package hw7;
+import javafx.application.Application;
+import javafx.animation.PathTransition;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import javafx.scene.input.KeyCode;
+
+
+public class Hw7 extends Application {
+  @Override  
+    public void start (Stage p )
+    {
+        Pane a = new Pane();
+        ImageView fdu = new ImageView(new Image("image/car.jpg",350,350,true,true));
+        a.getChildren().add(fdu);
+        
+        PathTransition pt = new PathTransition(Duration.millis(5000) , new Line(175,700,1270,700) , fdu);
+        pt.setCycleCount(500);
+        pt.play();
+        Scene s = new Scene(a,2000,2000);
+        p.setTitle("Sports Car Racing");
+        
+        p.setScene(s);
+        p.show();
+        
+        a.setOnMouseClicked(e ->
+        {
+            switch(e.getButton()) {
+            case PRIMARY :
+                pt.pause();
+                break;
+            case SECONDARY :
+                pt.play();
+                break;
+           }
+        }); 
+        
+        a.setOnKeyPressed(e -> 
+        {
+            if (e.getCode() == KeyCode.UP) 
+            {
+                pt.setRate(pt.getRate()*2);
+            }
+            else if (e.getCode() == KeyCode.DOWN) 
+            {
+               pt.setRate(pt.getRate()/2);
+            }
+	});
+        a.requestFocus();
+    }
+   
+    public static void main(String[] args) 
+    {
+        launch(args);
+    }
+    
+}
